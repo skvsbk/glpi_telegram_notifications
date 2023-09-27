@@ -9,16 +9,26 @@ from app.notification import notify_ticket_solved, notify_update_task
 
 logging.config.dictConfig(Config.LOGGING_CONFIG)
 logger = logging.getLogger(__name__)
+logger.setLevel('INFO')
 
-try:
-    SUBJECT = sys.argv[1]
-    logger.info('SUBJECT is %s', SUBJECT)
-except:
-    logger.warning('Empty argument')
-    sys.exit()
+# SUBJECT = ''
+#
+# for i in range(1, 10):
+#     try:
+#         SUBJECT += " " + sys.argv[i]
+#     except:
+#         pass
+#
+# if SUBJECT == '':
+#     logger.warning('Empty argument')
+#     sys.exit()
+# else:
+#     logger.info('Subject: %s', SUBJECT)
+
 
 # new
 # SUBJECT = '=?utf-8?B?W0dMUEkgIzAwMDA4NTFdINCd0L7QstCw0Y8g0LfQsNGP0LLQutCwINCi?= =?utf-8?B?0LXRgdGC0L7QstCw0Y8g0LfQsNGP0LLQutCw?='
+SUBJECT = '=?utf-8?B?W0dMUEkgIzAwMDA5ODBdINCd0L7QstCw0Y8g0LfQsNGP0LLQutCwINCe0LE=?= =?utf-8?B?0YXQvtC0?='
 
 # add comment
 # SUBJECT = '=?utf-8?B?W0dMUEkgIzAwMDA4NTFdINCd0L7QstGL0Lkg0LrQvtC80LzQtdC9?= =?utf-8?B?0YLQsNGA0LjQuSDQv9C+INC30LDRj9Cy0LrQtSDQotC10YHRgtC+0LLQsNGP?= =?utf-8?B?INC30LDRj9Cy0LrQsA==?='
@@ -34,23 +44,24 @@ except:
 # SUBJECT = '=?utf-8?B?W0dMUEkgIzAwMDA4NTFdINCX0LDRj9Cy0LrQsCDRgNC10YjQtdC90LA=?= =?utf-8?B?INCi0LXRgdGC0L7QstCw0Y8g0LfQsNGP0LLQutCw?='
 
 
-def get_mail_info(subject: str):
+def decode_subject(subject: str):
     if subject.startswith('Undelivered'):
         return None
     subj_string = decode_header(subject)[0][0].decode('utf-8')
+    logger.info('subject-string: %s', subj_string)
     ticket_number = int(re.findall(r'[0-9]{7}', subj_string)[0])
     msg_type = re.findall(r'\w+\s+\w+', subj_string)[0]
     return [ticket_number, msg_type]
 
 
 def notify():
-    mail_info = get_mail_info(SUBJECT)
+    subject = decode_subject(SUBJECT)
 
-    if mail_info is None:
+    if subject is None:
         return
 
-    ticket_id = mail_info[0]
-    msg_type = mail_info[1]
+    ticket_id = subject[0]
+    msg_type = subject[1]
 
     if msg_type == 'Новая заявка':
         notify_new_ticket(ticket_id)

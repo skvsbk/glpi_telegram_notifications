@@ -60,3 +60,15 @@ class Config:
     GLPI_TASK_STATUS = {0: 'Информация',
                         1: 'К исполнению',
                         2: 'Выполнена'}
+
+    # List of telegram_id (chief engineer etc)
+    MANDATORY_NOTIFY = []
+
+    # id of Дежурный слесарь
+    NOTYIFY_ALL_OF_USER = 84
+    # id group of Слесари
+    NOTYFY_ALL_IN_GRP = 9
+
+    # Notification period
+    NOTIFY_START_TIME = 9
+    NOTIFY_STOP_TIME = 18

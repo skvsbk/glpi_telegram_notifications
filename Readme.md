@@ -22,7 +22,7 @@ LOCKFILE=$HOME/.lockmail
 SUBJECT=`formail -x Subject:`
 
 :0
-| $HOME/notify_bot.sh "$SUBJECT"
+| $HOME/notify_bot.sh      "$SUBJECT"
 }
 ```
 
