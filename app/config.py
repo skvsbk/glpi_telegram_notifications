@@ -8,7 +8,7 @@ class Config:
     BOT_TOKEN = os.getenv('BOT_TOKEN')
     URL_GLPI = os.getenv('URL_GLPI')
 
-    LOG_FILENAME = './app/log/bot_creation.log'
+    LOG_FILENAME = './app/log/bot_notification.log'
     LOGGING_CONFIG = {
         "version": 1,
         "disable_existing_loggers": False,
