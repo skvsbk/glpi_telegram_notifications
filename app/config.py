@@ -69,6 +69,8 @@ class Config:
     # id group of Слесари
     NOTYFY_ALL_IN_GRP = 9
 
+    DO_NOT_NOTIFY_TICKET_NAME = ("Обход",)
+
     # Notification period
     NOTIFY_START_TIME = 9
     NOTIFY_STOP_TIME = 18

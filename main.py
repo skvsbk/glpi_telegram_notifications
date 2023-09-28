@@ -11,42 +11,22 @@ logging.config.dictConfig(Config.LOGGING_CONFIG)
 logger = logging.getLogger(__name__)
 logger.setLevel('INFO')
 
-# SUBJECT = ''
-#
-# for i in range(1, 10):
-#     try:
-#         SUBJECT += " " + sys.argv[i]
-#     except:
-#         pass
-#
-# if SUBJECT == '':
-#     logger.warning('Empty argument')
-#     sys.exit()
-# else:
-#     logger.info('Subject: %s', SUBJECT)
+SUBJECT = ''
 
+for i in range(1, 10):
+    try:
+        SUBJECT += " " + sys.argv[i]
+    except:
+        break
 
-# new
-# SUBJECT = '=?utf-8?B?W0dMUEkgIzAwMDA4NTFdINCd0L7QstCw0Y8g0LfQsNGP0LLQutCwINCi?= =?utf-8?B?0LXRgdGC0L7QstCw0Y8g0LfQsNGP0LLQutCw?='
-SUBJECT = '=?utf-8?B?W0dMUEkgIzAwMDA5ODBdINCd0L7QstCw0Y8g0LfQsNGP0LLQutCwINCe0LE=?= =?utf-8?B?0YXQvtC0?='
-
-# add comment
-# SUBJECT = '=?utf-8?B?W0dMUEkgIzAwMDA4NTFdINCd0L7QstGL0Lkg0LrQvtC80LzQtdC9?= =?utf-8?B?0YLQsNGA0LjQuSDQv9C+INC30LDRj9Cy0LrQtSDQotC10YHRgtC+0LLQsNGP?= =?utf-8?B?INC30LDRj9Cy0LrQsA==?='
-# SUBJECT = '=?utf-8?B?W0dMUEkgIzAwMDA4NTFdINCd0L7QstGL0Lkg0LrQvtC80LzQtdC9?= =?utf-8?B?0YLQsNGA0LjQuSDQv9C+INC30LDRj9Cy0LrQtSDQotC10YHRgtC+0LLQsNGP?= =?utf-8?B?INC30LDRj9Cy0LrQsA==?='
-
-# add task
-# SUBJECT = '=?utf-8?B?W0dMUEkgIzAwMDA4NTFdINCd0L7QstC+0LUg0LfQsNC00LDQvdC40LU=?= =?utf-8?B?INCi0LXRgdGC0L7QstCw0Y8g0LfQsNGP0LLQutCw?='
-
-# update task (N/A)
-# SUBJECT = '=?utf-8?B?W0dMUEkgIzAwMDA4NTFdINCe0LHQvdC+0LLQu9C10L3QuNC1INC30LA=?= =?utf-8?B?0LTQsNGH0Lgg0KLQtdGB0YLQvtCy0LDRjyDQt9Cw0Y/QstC60LA=?='
-
-# solve (YES!)
-# SUBJECT = '=?utf-8?B?W0dMUEkgIzAwMDA4NTFdINCX0LDRj9Cy0LrQsCDRgNC10YjQtdC90LA=?= =?utf-8?B?INCi0LXRgdGC0L7QstCw0Y8g0LfQsNGP0LLQutCw?='
+if SUBJECT == '':
+    logger.warning('Empty argument')
+    sys.exit()
+else:
+    logger.info('Subject: %s', SUBJECT)
 
 
 def decode_subject(subject: str):
-    if subject.startswith('Undelivered'):
-        return None
     subj_string = decode_header(subject)[0][0].decode('utf-8')
     logger.info('subject-string: %s', subj_string)
     ticket_number = int(re.findall(r'[0-9]{7}', subj_string)[0])
