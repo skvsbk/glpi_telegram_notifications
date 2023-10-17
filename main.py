@@ -11,6 +11,13 @@ logging.config.dictConfig(Config.LOGGING_CONFIG)
 logger = logging.getLogger(__name__)
 logger.setLevel('INFO')
 
+action_types = {'Новая заявка': notify_new_ticket,
+                'Новый комментарий': notify_new_comment,
+                'Новое задание': notify_new_task,
+                'Обновление задачи': notify_update_task,
+                'Заявка решена': notify_ticket_solved,
+                }
+
 SUBJECT = ''
 
 for i in range(1, 10):
@@ -43,20 +50,9 @@ def notify():
     ticket_id = subject[0]
     msg_type = subject[1]
 
-    if msg_type == 'Новая заявка':
-        notify_new_ticket(ticket_id)
-
-    elif msg_type == 'Новый комментарий':
-        notify_new_comment(ticket_id)
-
-    elif msg_type == 'Новое задание':
-        notify_new_task(ticket_id)
-
-    elif msg_type == 'Обновление задачи':
-        notify_update_task(ticket_id)
-
-    elif msg_type == 'Заявка решена':
-        notify_ticket_solved(ticket_id)
+    action = action_types.get(msg_type)
+    if action is not None:
+        action(ticket_id)
 
 
 if __name__ == '__main__':
